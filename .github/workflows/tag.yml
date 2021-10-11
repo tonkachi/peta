@@ -1,4 +1,4 @@
-name: backend/fusen
+name: backend/tag
 
 on: [push, pull_request]
 
@@ -8,7 +8,7 @@ env:
 defaults:
   run:
     shell: bash
-    working-directory: ./backend/fusen
+    working-directory: ./backend/tag
 
 jobs:
   test:
