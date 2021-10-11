@@ -70,6 +70,7 @@ mod tests {
             }
         }
     }
+
     impl DeleteRepository<DummyEntity> for DummyEntityRepository {
         fn delete(&self, entity: DummyEntity) -> Result<(), Error> {
             let mut m = self.store.lock().unwrap();
