@@ -7,6 +7,7 @@ edition = "2018"
 
 [dependencies]
 regex = "1"
+derive-new = "0.5"
 derive_builder = "0.10"
 getset = "0.1"
 anyhow = "1.0"
