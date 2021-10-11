@@ -1,7 +1,9 @@
+#[allow(clippy::module_inception)]
+mod vo;
+
 mod id;
 mod note;
 mod title;
-mod vo;
 
 pub use self::id::Id;
 pub use self::note::FusenNote;
