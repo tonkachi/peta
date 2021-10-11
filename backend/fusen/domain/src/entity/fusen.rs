@@ -3,7 +3,7 @@ use crate::vo::{FusenNote, FusenTitle, Id};
 use derive_builder::Builder;
 use getset::{Getters, Setters};
 
-#[derive(Clone, Debug, Getters, Setters, Builder)]
+#[derive(Clone, Debug, Getters, Setters, Builder, Eq)]
 #[builder(setter(into))]
 pub struct Fusen {
     #[builder(pattern = "immutable")]

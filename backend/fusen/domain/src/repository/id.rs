@@ -1,8 +1,8 @@
 use crate::vo::Id;
 use anyhow::{Error, Result};
 
-pub trait IdRepository {
-    fn generate<T>(&self) -> Result<Id<T>, Error>;
+pub trait IdRepository<T> {
+    fn generate(&self) -> Result<Id<T>, Error>;
 }
 
 #[cfg(test)]
@@ -18,15 +18,17 @@ mod tests {
     #[derive(Default)]
     struct MockIdRepository {}
 
-    impl IdRepository for MockIdRepository {
-        fn generate<T>(&self) -> Result<Id<T>, Error> {
-            Ok("01F8MECHZX3TBDSZ7XRADM79XE".parse::<Id<T>>().unwrap())
+    impl IdRepository<DummyEntity> for MockIdRepository {
+        fn generate(&self) -> Result<Id<DummyEntity>, Error> {
+            Ok("01F8MECHZX3TBDSZ7XRADM79XE"
+                .parse::<Id<DummyEntity>>()
+                .unwrap())
         }
     }
 
     #[test]
     fn test_id_repository_for_entity() {
         let sut = MockIdRepository::default();
-        assert!(sut.generate::<DummyEntity>().is_ok());
+        assert!(sut.generate().is_ok());
     }
 }
