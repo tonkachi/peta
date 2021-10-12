@@ -3,12 +3,12 @@ use anyhow::Error;
 use std::str::FromStr;
 use std::string::ToString;
 
-#[derive(Clone, Debug)]
-pub struct Hash(String);
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct TagName(String);
 
-impl ValueObject for Hash {}
+impl ValueObject for TagName {}
 
-impl FromStr for Hash {
+impl FromStr for TagName {
     type Err = Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -16,7 +16,7 @@ impl FromStr for Hash {
     }
 }
 
-impl ToString for Hash {
+impl ToString for TagName {
     fn to_string(&self) -> String {
         self.0.clone()
     }

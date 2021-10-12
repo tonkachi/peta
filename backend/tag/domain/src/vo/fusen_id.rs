@@ -3,7 +3,7 @@ use anyhow::Error;
 use std::str::FromStr;
 use std::string::ToString;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct FusenId(String);
 
 impl ValueObject for FusenId {}
