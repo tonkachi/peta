@@ -1,3 +1,6 @@
+pub mod vo;
+pub mod entity;
+
 #[cfg(test)]
 mod tests {
     #[test]
