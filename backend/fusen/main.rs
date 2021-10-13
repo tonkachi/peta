@@ -1,13 +1,23 @@
-use domain::entity::{Fusen, FusenBuilder};
-use domain::vo::{FusenNote, FusenTitle, Id};
+use anyhow::Result;
+use infrastructure::grpc::Service;
+use infrastructure::memory::FusenRepository;
+use infrastructure::ulid::IdRepository;
+use interface::controller::FusenController;
+use usecase::interactor::CreateFusenInteractor;
 
-fn main() {
-    let fusen = FusenBuilder::default()
-        .id("01F8MECHZX3TBDSZ7XRADM79XE".parse::<Id<Fusen>>().unwrap())
-        .title("title".parse::<FusenTitle>().unwrap())
-        .note("note".parse::<FusenNote>().unwrap())
-        .build()
-        .unwrap();
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let id_repository = IdRepository::default();
+    let fusen_repository = FusenRepository::default();
+    let create = CreateFusenInteractor::new(id_repository, fusen_repository);
+    let controller = FusenController::new(create);
+    let service = Service::new(controller);
 
-    println!("fusen: {:?}", fusen);
+    let addr = "[::1]:50051".parse()?;
+
+    println!("service listening on {}", addr);
+
+    service.serve(addr).await?;
+
+    Ok(())
 }
