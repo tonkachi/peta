@@ -13,7 +13,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let controller = FusenController::new(create);
     let service = Service::new(controller);
 
-    let addr = "[::1]:50051".parse()?;
+    let addr = "0.0.0.0:50051".parse()?;
 
     println!("service listening on {}", addr);
 

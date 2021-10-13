@@ -63,12 +63,7 @@ mod tests {
         id: Id<DummyEntity>,
     }
     impl AggregateRoot for DummyEntity {}
-    impl Entity for DummyEntity {
-        type Id = Id<DummyEntity>;
-        fn id(&self) -> Self::Id {
-            self.id.clone()
-        }
-    }
+    impl Entity for DummyEntity {}
 
     #[test]
     fn test_create_repository_for_entity() {
@@ -79,7 +74,7 @@ mod tests {
             .build()
             .unwrap();
 
-        let sut = FusenRepository::new();
+        let sut = FusenRepository::default();
 
         assert!(sut.create(entity).is_ok());
     }
@@ -93,7 +88,7 @@ mod tests {
             .build()
             .unwrap();
 
-        let sut = FusenRepository::new();
+        let sut = FusenRepository::default();
         sut.create(entity).unwrap();
 
         assert!(sut
@@ -110,7 +105,7 @@ mod tests {
             .build()
             .unwrap();
 
-        let sut = FusenRepository::new();
+        let sut = FusenRepository::default();
         sut.create(entity).unwrap();
         let target = sut
             .get("01F8MECHZX3TBDSZ7XRADM79XE".parse::<Id<Fusen>>().unwrap())
