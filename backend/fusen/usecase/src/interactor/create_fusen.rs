@@ -7,22 +7,22 @@ use domain::repository::{CreateRepository, DeleteRepository, GetRepository};
 use domain::vo::{FusenNote, FusenTitle};
 
 #[derive(new)]
-pub struct CreateFusenInterractor<I, S>
+pub struct CreateFusenInteractor<I, S>
 where
-    I: IdRepository<Fusen>,
+    I: IdRepository,
     S: CreateRepository<Fusen> + GetRepository<Fusen> + DeleteRepository<Fusen>,
 {
     id_repository: I,
     fusen_repository: S,
 }
 
-impl<I, S> Port<CreateFusenInputData, CreateFusenOutputData> for CreateFusenInterractor<I, S>
+impl<I, S> Port<CreateFusenInputData, CreateFusenOutputData> for CreateFusenInteractor<I, S>
 where
-    I: IdRepository<Fusen>,
+    I: IdRepository,
     S: CreateRepository<Fusen> + GetRepository<Fusen> + DeleteRepository<Fusen>,
 {
     fn handle(&self, input: CreateFusenInputData) -> Result<CreateFusenOutputData, Error> {
-        let id = self.id_repository.generate()?;
+        let id = self.id_repository.generate::<Fusen>()?;
 
         let fusen = FusenBuilder::default()
             .id(id)
@@ -50,9 +50,9 @@ mod tests {
 
     #[derive(new)]
     struct MockIdRepository {}
-    impl IdRepository<Fusen> for MockIdRepository {
-        fn generate(&self) -> Result<Id<Fusen>, Error> {
-            Ok("01F8MECHZX3TBDSZ7XRADM79XE".parse::<Id<Fusen>>().unwrap())
+    impl IdRepository for MockIdRepository {
+        fn generate<T>(&self) -> Result<Id<T>, Error> {
+            Ok("01F8MECHZX3TBDSZ7XRADM79XE".parse::<Id<T>>().unwrap())
         }
     }
 
@@ -100,7 +100,7 @@ mod tests {
     fn test_create_fusen_handle() {
         let id_repository = MockIdRepository::new();
         let fusen_repository = MockFusenRepository::new();
-        let sut = CreateFusenInterractor::new(id_repository, fusen_repository);
+        let sut = CreateFusenInteractor::new(id_repository, fusen_repository);
 
         assert_eq!(
             sut.handle(CreateFusenInputData::new(
