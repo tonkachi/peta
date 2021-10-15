@@ -9,6 +9,7 @@ edition = "2018"
 members = ["domain", "usecase", "interface", "infrastructure"]
 
 [dependencies]
+domain = { path = "./domain"}
 
 [[bin]]
 name = "tag"
