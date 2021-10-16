@@ -1,0 +1,19 @@
+version: "3"
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        - VARIANT=bullseye
+    command: "sh -c 'trap : SIGTERM SIGINT; sleep infinity & wait'"
+    volumes:
+      - .:/workspace:cached
+      - cache-rust-target:/cache/target
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+
+volumes:
+  cache-rust-target:

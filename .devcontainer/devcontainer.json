@@ -1,18 +1,21 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.194.3/containers/debian
 {
-	"name": "peta",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"args": { "VARIANT": "bullseye" }
-	},
+  "name": "peta",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspace",
 
-	// Set *default* container specific settings.json values on container create.
-	"settings": {},
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "files.watcherExclude": {
+      "**/target/**": true
+    }
+  },
 
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [],
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [],
 
-	// More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+  // More info: https://aka.ms/vscode-remote/containers/non-root.
+  // "remoteUser": "vscode"
 }
