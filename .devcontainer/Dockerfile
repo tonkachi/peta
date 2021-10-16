@@ -4,6 +4,9 @@
 ARG VARIANT="bullseye"
 FROM mcr.microsoft.com/vscode/devcontainers/rust:1-${VARIANT}
 
+ENV CARGO_BUILD_TARGET_DIR=/cache/target
+RUN mkdir -p $CARGO_BUILD_TARGET_DIR
+
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get -y install --no-install-recommends build-essential make curl bash zsh fish && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/*
@@ -19,6 +22,14 @@ RUN apt-get update && \
 # nodejs and npm
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - && apt install -y nodejs && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
+# golang
+ENV GOPATH /go
+ENV GOROOT /usr/local/go
+ENV PATH $PATH:$GOROOT/bin:$GOPATH/bin
+RUN curl -sLo go.tar.gz https://golang.org/dl/go1.17.2.linux-amd64.tar.gz && \
+    rm -rf /usr/local/go && tar -C /usr/local -xzf go.tar.gz && \
+    mkdir -p $GOPATH
 
 # yarn
 RUN npm install -g yarn
@@ -37,3 +48,6 @@ RUN curl -Lo /usr/local/bin/kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-
 # kubectl
 RUN curl -Lo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
     chmod +x /usr/local/bin/kubectl
+
+# grpcurl
+RUN go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
