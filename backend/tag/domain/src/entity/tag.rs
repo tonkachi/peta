@@ -14,7 +14,7 @@ pub struct Tag {
     name: TagName,
 
     #[getset(get = "pub", set = "pub")]
-    fusent_id: FusenId,
+    fusen_id: FusenId,
 }
 
 impl Entity for Tag {}
