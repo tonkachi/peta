@@ -2,7 +2,7 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.194.3/containers/debian
 {
   "name": "peta",
-  "dockerComposeFile": "../docker-compose.yml",
+  "dockerComposeFile": "./docker-compose.yml",
   "service": "dev",
   "workspaceFolder": "/workspace",
 
@@ -10,11 +10,38 @@
   "settings": {
     "files.watcherExclude": {
       "**/target/**": true
-    }
+    },
+    "[rust]": {
+      "editor.defaultFormatter": "rust-lang.rust"
+    },
+    "rust.target_dir": "/cache/target",
+    "sqltools.connections": [
+      {
+        "previewLimit": 50,
+        "server": "db",
+        "port": 5432,
+        "driver": "PostgreSQL",
+        "name": "db",
+        "group": "devcontainer",
+        "database": "postgres",
+        "username": "postgres",
+        "password": "postgres"
+      }
+    ]
   },
 
   // Add the IDs of extensions you want installed when the container is created.
-  "extensions": [],
+  "extensions": [
+    "rust-lang.rust",
+    "bungcip.better-toml",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "humao.rest-client",
+    "zxh404.vscode-proto3",
+    "vadimcn.vscode-lldb",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg"
+  ]
 
   // More info: https://aka.ms/vscode-remote/containers/non-root.
   // "remoteUser": "vscode"

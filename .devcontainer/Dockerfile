@@ -4,12 +4,14 @@
 ARG VARIANT="bullseye"
 FROM mcr.microsoft.com/vscode/devcontainers/rust:1-${VARIANT}
 
-ENV CARGO_BUILD_TARGET_DIR=/cache/target
-RUN mkdir -p $CARGO_BUILD_TARGET_DIR
-
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get -y install --no-install-recommends build-essential make curl bash zsh fish && \
     apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
+# rust
+RUN rustup component add rust-src && \
+    rustup component add rust-analysis && \
+    rustup component add rls
 
 # docker-cli
 RUN apt-get update && \

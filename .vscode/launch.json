@@ -1,0 +1,43 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug executable 'backend/fusen'",
+      "cargo": {
+        "args": [
+          "build",
+          "--manifest-path=backend/fusen/Cargo.toml",
+          "--bin=fusen",
+          "--package=fusen"
+        ],
+        "filter": {
+          "name": "fusen",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug executable 'backend/tag'",
+      "cargo": {
+        "args": [
+          "build",
+          "--manifest-path=backend/tag/Cargo.toml",
+          "--bin=tag",
+          "--package=tag"
+        ],
+        "filter": {
+          "name": "tag",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
