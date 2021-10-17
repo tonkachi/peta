@@ -1,5 +1,5 @@
 use crate::aggregate::Tag;
-use crate::vo::TagHash; // FusenId
+use crate::vo::TagHash;
 use anyhow::{Error, Result};
 
 pub trait TagRepository {
