@@ -18,6 +18,16 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: peta_test
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - uses: actions/checkout@v2
       - name: Install sccache
@@ -55,6 +65,8 @@ jobs:
           restore-keys: ${{ runner.os }}-sccache-
       - name: Start sccache server
         run: sccache --start-server
+      - name: Install diesel-cli
+        run: cargo install diesel_cli --no-default-features --features postgres
       - name: Format codes
         run: cargo fmt --all -- --check
       - name: Lint codes

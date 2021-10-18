@@ -25,6 +25,11 @@ db:
 	@cargo install diesel_cli --no-default-features --features postgres
 	@for f in $(SERVICES); do make -C $$f db; done
 
+.PHONY: db_test
+db_test:
+	@cargo install diesel_cli --no-default-features --features postgres
+	@for f in $(SERVICES); do make -C $$f db_test; done
+
 .PHONY: grpc
 grpc:
 	@for f in $(SERVICES); do make -C $$f grpc; done

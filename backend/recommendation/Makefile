@@ -12,11 +12,15 @@ lint:
 	@cargo clippy -- -D warnings
 
 .PHONY: test
-test:
+test: db_test
 	@cargo test --workspace
 
 .PHONY: db
 db:
+	@:
+
+.PHONY: db_test
+db_test:
 	@:
 
 .PHONY: run
