@@ -1,9 +1,10 @@
 use crate::vo::ValueObject;
 use anyhow::Error;
+use std::hash::Hash;
 use std::str::FromStr;
 use std::string::ToString;
 
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct TagHash(String);
 
 impl ValueObject for TagHash {}
