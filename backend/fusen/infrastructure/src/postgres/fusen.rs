@@ -15,9 +15,9 @@ pub struct FusenRepository {
 }
 
 impl FusenRepository {
-    pub fn default() -> Self {
+    pub fn new(database_url: &str) -> Self {
         Self {
-            pool: establish_connections(),
+            pool: establish_connections(database_url),
         }
     }
 
@@ -83,15 +83,15 @@ mod tests {
     use super::*;
     use ulid::Ulid;
 
-    fn establish_connection() -> PgConnection {
-        let database_url = "postgres://postgres:postgres@localhost/peta_test";
+    fn establish_connection(database_url: &str) -> PgConnection {
         PgConnection::establish(&database_url)
             .expect(&format!("Error connecting to {}", database_url))
     }
 
     #[test]
     fn test_fusen_repository_create() {
-        let conn = establish_connection();
+        let database_url = "postgres://postgres:postgres@localhost/peta_test";
+        let conn = establish_connection(&database_url);
         conn.test_transaction::<_, Error, _>(|| {
             let entity = FusenBuilder::default()
                 .id(Ulid::new().to_string().parse::<Id<Fusen>>().unwrap())
@@ -100,7 +100,7 @@ mod tests {
                 .build()
                 .unwrap();
 
-            let sut = FusenRepository::default();
+            let sut = FusenRepository::new(&database_url);
 
             assert!(sut.create_with_conn(&conn, entity.clone()).is_ok());
 
@@ -110,7 +110,8 @@ mod tests {
 
     #[test]
     fn test_fusen_repository_get() {
-        let conn = establish_connection();
+        let database_url = "postgres://postgres:postgres@localhost/peta_test";
+        let conn = establish_connection(&database_url);
         conn.test_transaction::<_, Error, _>(|| {
             let entity = FusenBuilder::default()
                 .id(Ulid::new().to_string().parse::<Id<Fusen>>().unwrap())
@@ -119,7 +120,7 @@ mod tests {
                 .build()
                 .unwrap();
 
-            let sut = FusenRepository::default();
+            let sut = FusenRepository::new(&database_url);
             sut.create_with_conn(&conn, entity.clone()).unwrap();
 
             assert!(sut.get_with_conn(&conn, entity.id().clone()).is_ok());
@@ -130,7 +131,8 @@ mod tests {
 
     #[test]
     fn test_fusen_repository_delete() {
-        let conn = establish_connection();
+        let database_url = "postgres://postgres:postgres@localhost/peta_test";
+        let conn = establish_connection(&database_url);
         conn.test_transaction::<_, Error, _>(|| {
             let entity = FusenBuilder::default()
                 .id(Ulid::new().to_string().parse::<Id<Fusen>>().unwrap())
@@ -139,7 +141,7 @@ mod tests {
                 .build()
                 .unwrap();
 
-            let sut = FusenRepository::default();
+            let sut = FusenRepository::new(&database_url);
             sut.create_with_conn(&conn, entity.clone()).unwrap();
 
             assert!(sut.delete_with_conn(&conn, entity.clone()).is_ok());

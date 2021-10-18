@@ -3,12 +3,15 @@ use infrastructure::grpc::Service;
 use infrastructure::postgres::FusenRepository;
 use infrastructure::ulid::IdRepository;
 use interface::controller::FusenController;
+use std::env;
 use usecase::interactor::CreateFusenInteractor;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+
     let id_repository = IdRepository::default();
-    let fusen_repository = FusenRepository::default();
+    let fusen_repository = FusenRepository::new(&database_url);
     let create = CreateFusenInteractor::new(id_repository, fusen_repository);
     let controller = FusenController::new(create);
     let service = Service::new(controller);
