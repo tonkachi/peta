@@ -1,5 +1,8 @@
 SHELL = /bin/bash
 
+DATABASE_URL ?= postgres://postgres:postgres@localhost/peta
+TEST_DATABASE_URL ?= postgres://postgres:postgres@localhost/peta_test
+
 .PHONY: all
 all: fmt lint test
 
@@ -12,8 +15,20 @@ lint:
 	@cargo clippy -- -D warnings
 
 .PHONY: test
-test:
+test: db_test
 	@cargo test --workspace
+
+.PHONY: db
+db:
+	@diesel --database-url ${DATABASE_URL} setup
+	@diesel --database-url ${DATABASE_URL} migration run
+	@diesel --database-url ${DATABASE_URL} migration list
+
+.PHONY: db_test
+db_test:
+	@diesel --database-url ${TEST_DATABASE_URL} setup
+	@diesel --database-url ${TEST_DATABASE_URL} migration run
+	@diesel --database-url ${TEST_DATABASE_URL} migration list
 
 .PHONY: run
 run:

@@ -1,6 +1,6 @@
 use anyhow::Result;
 use infrastructure::grpc::Service;
-use infrastructure::memory::FusenRepository;
+use infrastructure::postgres::FusenRepository;
 use infrastructure::ulid::IdRepository;
 use interface::controller::FusenController;
 use usecase::interactor::CreateFusenInteractor;

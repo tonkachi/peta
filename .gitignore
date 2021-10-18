@@ -1,6 +1,10 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/vim,macos,emacs,linux,windows,intellij,visualstudiocode,rust,node,yarn
-# Edit at https://www.toptal.com/developers/gitignore?templates=vim,macos,emacs,linux,windows,intellij,visualstudiocode,rust,node,yarn
+# Created by https://www.toptal.com/developers/gitignore/api/vim,rust,node,yarn,macos,emacs,linux,windows,intellij,visualstudiocode,direnv
+# Edit at https://www.toptal.com/developers/gitignore?templates=vim,rust,node,yarn,macos,emacs,linux,windows,intellij,visualstudiocode,direnv
+
+### direnv ###
+.direnv
+.envrc
 
 ### Emacs ###
 # -*- mode: gitignore; -*-
@@ -420,4 +424,4 @@ $RECYCLE.BIN/
 # and uncomment the following lines
 # .pnp.*
 
-# End of https://www.toptal.com/developers/gitignore/api/vim,macos,emacs,linux,windows,intellij,visualstudiocode,rust,node,yarn
+# End of https://www.toptal.com/developers/gitignore/api/vim,rust,node,yarn,macos,emacs,linux,windows,intellij,visualstudiocode,direnv
