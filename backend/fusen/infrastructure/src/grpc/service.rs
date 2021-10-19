@@ -35,8 +35,10 @@ where
         Err(Status::unimplemented("unimplemented"))
     }
 
-    async fn get(&self, _: Request<GetRequest>) -> Result<Response<GetResponse>, Status> {
-        Err(Status::unimplemented("unimplemented"))
+    async fn get(&self, request: Request<GetRequest>) -> Result<Response<GetResponse>, Status> {
+        println!("{:?}", request);
+
+        self.controller.get(request)
     }
 
     async fn delete(&self, _: Request<DeleteRequest>) -> Result<Response<DeleteResponse>, Status> {
