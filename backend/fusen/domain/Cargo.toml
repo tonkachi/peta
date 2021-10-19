@@ -6,9 +6,9 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-regex = "1"
-derive-new = "0.5"
-derive_builder = "0.10"
-getset = "0.1"
-anyhow = "1.0"
-thiserror = "1.0"
+regex = "1.5.4"
+derive-new = "0.5.9"
+derive_builder = "0.10.2"
+getset = "0.1.1"
+anyhow = "1.0.44"
+thiserror = "1.0.30"
