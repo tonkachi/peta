@@ -86,6 +86,6 @@ jobs:
             ~/.cargo/git
           key: clippy-cargo-${{ hashFiles('**/Cargo.toml') }}
       - name: Run clippy
-        run: cargo clippy --manifest-path Cargo.toml --all -- -D warnings
+        run: cargo clippy --all -- -D warnings
       - name: Check formating
-        run: cargo fmt --manifest-path Cargo.toml --all -- --check
+        run: cargo fmt --all -- --check
