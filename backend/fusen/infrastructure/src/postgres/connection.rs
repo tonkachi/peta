@@ -12,14 +12,14 @@ pub struct DbPool(Pool<ConnectionManager<PgConnection>>);
 impl DbPool {
     pub fn new(database_url: &str) -> Self {
         let manager = ConnectionManager::<PgConnection>::new(database_url);
-        let pool = r2d2::Pool::builder().build_unchecked(manager);
+        let pool = Pool::builder().build_unchecked(manager);
 
         Self(pool)
     }
 
     pub fn init(&self) -> Result<(), Error> {
         let conn = self.pool().get()?;
-        embedded_migrations::run(&conn)?;
+        embedded_migrations::run_with_output(&conn, &mut std::io::stdout())?;
 
         Ok(())
     }
