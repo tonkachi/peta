@@ -15,6 +15,10 @@ lint:
 test:
 	@cargo test --workspace
 
+.PHONY: db
+db:
+	@:
+
 .PHONY: run
 run:
 	@cargo run

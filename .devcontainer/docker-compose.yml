@@ -8,6 +8,7 @@ services:
         - VARIANT=bullseye
     environment:
       - CARGO_BUILD_TARGET_DIR=/cache/target
+      - DATABASE_URL=postgres://postgres:postgres@localhost/peta
     tty: true
     working_dir: /workspace
     volumes:

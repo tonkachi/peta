@@ -21,9 +21,9 @@
         "server": "db",
         "port": 5432,
         "driver": "PostgreSQL",
-        "name": "db",
+        "name": "peta",
         "group": "devcontainer",
-        "database": "postgres",
+        "database": "peta",
         "username": "postgres",
         "password": "postgres"
       }
