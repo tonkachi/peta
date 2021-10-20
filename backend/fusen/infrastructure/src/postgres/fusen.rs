@@ -7,6 +7,7 @@ use domain::entity::*;
 use domain::repository::*;
 use domain::vo::*;
 
+#[derive(Clone)]
 pub struct FusenRepository {
     connections: DbPool,
 }

@@ -19,6 +19,7 @@ impl DbPool {
 
     pub fn init(&self) -> Result<(), Error> {
         let conn = self.pool().get()?;
+
         embedded_migrations::run_with_output(&conn, &mut std::io::stdout())?;
 
         Ok(())

@@ -26,7 +26,7 @@ where
         &self,
         request: Request<CreateRequest>,
     ) -> Result<Response<CreateResponse>, Status> {
-        println!("{:?}", request);
+        println!("{:?}", request); // TODO: logger を実装して println! を削除する
 
         self.controller.create(request)
     }
@@ -35,8 +35,10 @@ where
         Err(Status::unimplemented("unimplemented"))
     }
 
-    async fn get(&self, _: Request<GetRequest>) -> Result<Response<GetResponse>, Status> {
-        Err(Status::unimplemented("unimplemented"))
+    async fn get(&self, request: Request<GetRequest>) -> Result<Response<GetResponse>, Status> {
+        println!("{:?}", request); // TODO: logger を実装して println! を削除する
+
+        self.controller.get(request)
     }
 
     async fn delete(&self, _: Request<DeleteRequest>) -> Result<Response<DeleteResponse>, Status> {
