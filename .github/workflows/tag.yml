@@ -1,6 +1,13 @@
 name: backend/tag
 
 on: [push, pull_request]
+  push:
+    branches: [ main ]
+    paths:
+      - backend/tag
+  pull_request:
+    paths:
+      - backend/tag
 
 env:
   CARGO_TERM_COLOR: always
@@ -8,7 +15,7 @@ env:
 defaults:
   run:
     shell: bash
-    working-directory: ./backend/recommendation
+    working-directory: ./backend/tag
 
 jobs:
   test:
