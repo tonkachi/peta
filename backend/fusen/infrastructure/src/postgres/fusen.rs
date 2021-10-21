@@ -91,7 +91,7 @@ mod tests {
     #[test]
     fn test_fusen_repository_create() {
         let database_url = "postgres://postgres:postgres@localhost/peta_test";
-        let connections = DbPool::new(&database_url);
+        let connections = DbPool::new(database_url);
 
         init(connections.clone());
 
@@ -106,7 +106,7 @@ mod tests {
 
             let sut = FusenRepository::new(connections);
 
-            assert!(sut.create_with_conn(&conn, entity.clone()).is_ok());
+            assert!(sut.create_with_conn(&conn, entity).is_ok());
 
             Ok(())
         });
@@ -115,7 +115,7 @@ mod tests {
     #[test]
     fn test_fusen_repository_get() {
         let database_url = "postgres://postgres:postgres@localhost/peta_test";
-        let connections = DbPool::new(&database_url);
+        let connections = DbPool::new(database_url);
 
         init(connections.clone());
 
@@ -140,7 +140,7 @@ mod tests {
     #[test]
     fn test_fusen_repository_delete() {
         let database_url = "postgres://postgres:postgres@localhost/peta_test";
-        let connections = DbPool::new(&database_url);
+        let connections = DbPool::new(database_url);
 
         init(connections.clone());
 
@@ -156,7 +156,7 @@ mod tests {
             let sut = FusenRepository::new(connections);
             sut.create_with_conn(&conn, entity.clone()).unwrap();
 
-            assert!(sut.delete_with_conn(&conn, entity.clone()).is_ok());
+            assert!(sut.delete_with_conn(&conn, entity).is_ok());
 
             Ok(())
         });

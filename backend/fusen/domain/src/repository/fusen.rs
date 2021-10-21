@@ -56,7 +56,7 @@ mod tests {
     impl CreateRepository<DummyEntity> for DummyEntityRepository {
         fn create(&self, entity: DummyEntity) -> Result<(), Error> {
             let mut m = self.store.lock().unwrap();
-            m.insert(entity.id.clone(), entity.clone());
+            m.insert(entity.id.clone(), entity);
             Ok(())
         }
     }
@@ -64,7 +64,7 @@ mod tests {
     impl GetRepository<DummyEntity> for DummyEntityRepository {
         fn get(&self, id: Id<DummyEntity>) -> Result<DummyEntity, Error> {
             let m = self.store.lock().unwrap();
-            match m.get(&id.clone()) {
+            match m.get(&id) {
                 Some(aggregate_root) => Ok(aggregate_root.clone()),
                 None => bail!("not found entity"),
             }
@@ -74,7 +74,7 @@ mod tests {
     impl DeleteRepository<DummyEntity> for DummyEntityRepository {
         fn delete(&self, entity: DummyEntity) -> Result<(), Error> {
             let mut m = self.store.lock().unwrap();
-            match m.remove(&entity.id.clone()) {
+            match m.remove(&entity.id) {
                 Some(_) => Ok(()),
                 None => bail!("not found entity"),
             }
