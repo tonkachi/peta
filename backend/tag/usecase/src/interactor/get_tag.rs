@@ -11,7 +11,6 @@ pub struct GetTagInteractor<T: TagRepository> {
 
 impl<T: TagRepository> Port<GetTagInputData, GetTagOutputData> for GetTagInteractor<T> {
     fn handle(&self, input: GetTagInputData) -> Result<GetTagOutputData, Error> {
-        println!("test {:#?}", input);
         let tag = self.tag_repository.get(input.hash.parse::<TagHash>()?)?;
         Ok(GetTagOutputData {
             hash: tag.hash().clone().to_string(),
