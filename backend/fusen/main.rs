@@ -6,6 +6,7 @@ use infrastructure::ulid::IdRepository;
 use interface::controller::FusenController;
 use std::env;
 use usecase::interactor::CreateFusenInteractor;
+use usecase::interactor::DeleteFusenInteractor;
 use usecase::interactor::GetFusenInteractor;
 
 #[tokio::main]
@@ -18,7 +19,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let fusen_repository = FusenRepository::new(connections.clone());
     let create = CreateFusenInteractor::new(id_repository, fusen_repository.clone());
     let get = GetFusenInteractor::new(fusen_repository.clone());
-    let controller = FusenController::new(create, get);
+    let delete = DeleteFusenInteractor::new(fusen_repository.clone());
+    let controller = FusenController::new(create, get, delete);
     let service = Service::new(controller);
 
     let addr = "0.0.0.0:50051".parse()?;

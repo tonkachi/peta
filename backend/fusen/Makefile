@@ -38,3 +38,4 @@ run:
 grpc:
 	@grpcurl -plaintext -proto ../../api/peta/fusen/v1/fusen.proto -d '{"title": "テスト", "note": "あああ\nいいいい"}' localhost:50051 peta.fusen.v1.FusenService/Create
 	@grpcurl -plaintext -proto ../../api/peta/fusen/v1/fusen.proto -d '{"id": "0123456789ABCDEFGHJKMNPQRSTVWXYZ"}' localhost:50051 peta.fusen.v1.FusenService/Get
+	@grpcurl -plaintext -proto ../../api/peta/fusen/v1/fusen.proto -d '{"id": "0123456789ABCDEFGHJKMNPQRSTVWXYZ"}' localhost:50051 peta.fusen.v1.FusenService/Delete
