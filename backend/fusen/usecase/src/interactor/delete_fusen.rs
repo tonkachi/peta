@@ -59,7 +59,7 @@ mod tests {
     impl GetRepository<Fusen> for MockFusenRepository {
         fn get(&self, id: Id<Fusen>) -> Result<Fusen, Error> {
             let m = self.store.lock().unwrap();
-            match m.get(&id.clone()) {
+            match m.get(&id) {
                 Some(aggregate_root) => Ok(aggregate_root.clone()),
                 None => bail!("not found entity"),
             }
