@@ -1,13 +1,6 @@
 name: backend/tag
 
-on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'backend/tag/**'
-  pull_request:
-    paths:
-      - 'backend/tag/**'
+on: [push, pull_request]
 
 env:
   CARGO_TERM_COLOR: always
