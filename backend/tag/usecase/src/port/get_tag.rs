@@ -11,7 +11,7 @@ impl InputData for GetTagInputData {}
 pub struct GetTagOutputData {
     pub hash: String,
     pub name: String,
-    pub fusen_id: String,
+    pub fusen_ids: Vec<String>,
 }
 
 impl OutputData for GetTagOutputData {}
