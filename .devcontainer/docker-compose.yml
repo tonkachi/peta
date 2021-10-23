@@ -4,8 +4,6 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
-      args:
-        - VARIANT=bullseye
     environment:
       - CARGO_BUILD_TARGET_DIR=/cache/target
       - DATABASE_URL=postgres://postgres:postgres@localhost/peta
@@ -19,6 +17,8 @@ services:
       - SYS_PTRACE
     security_opt:
       - seccomp:unconfined
+    privileged: true
+    init: true
 
   db:
     image: postgres:latest
