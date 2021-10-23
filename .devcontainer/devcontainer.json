@@ -28,20 +28,7 @@
     "files.watcherExclude": {
       "**/target/**": true
     },
-    "rust.target_dir": "/cache/target",
-    "sqltools.connections": [
-      {
-        "previewLimit": 50,
-        "server": "db",
-        "port": 5432,
-        "driver": "PostgreSQL",
-        "name": "peta",
-        "group": "devcontainer",
-        "database": "peta",
-        "username": "postgres",
-        "password": "postgres"
-      }
-    ]
+    "rust.target_dir": "/cache/target"
   },
 
   // Add the IDs of extensions you want installed when the container is created.
