@@ -12,10 +12,7 @@ pub struct GetTagInteractor<T: TagRepository> {
 impl<T: TagRepository> Port<GetTagInputData, GetTagOutputData> for GetTagInteractor<T> {
     fn handle(&self, input: GetTagInputData) -> Result<GetTagOutputData, Error> {
         let tag = self.tag_repository.get(input.hash.parse::<TagHash>()?)?;
-        let mut fusen_ids: Vec<String> = Vec::new();
-        for fusen_id in tag.fusen_ids() {
-            fusen_ids.push(fusen_id.to_string())
-        }
+        let fusen_ids = tag.fusen_ids().iter().map(|x| x.to_string()).collect();
         Ok(GetTagOutputData {
             hash: tag.hash().clone().to_string(),
             name: tag.name().clone().to_string(),
@@ -93,12 +90,11 @@ mod tests {
 
         fn get_by_fusen_id(&self, fusen_id: FusenId) -> Result<Vec<Tag>, Error> {
             let tags = self.tags.lock().unwrap();
-            let mut filtered_tags: Vec<Tag> = Vec::new();
-            for tag in tags.values() {
-                if tag.fusen_ids().contains(&fusen_id) {
-                    filtered_tags.push(tag.clone());
-                }
-            }
+            let filtered_tags = tags
+                .values()
+                .filter(|&x| x.fusen_ids().contains(&fusen_id))
+                .map(|x| x.clone())
+                .collect();
             Ok(filtered_tags)
         }
 

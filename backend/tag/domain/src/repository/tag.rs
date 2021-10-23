@@ -81,12 +81,11 @@ mod tests {
 
         fn get_by_fusen_id(&self, fusen_id: FusenId) -> Result<Vec<Tag>, Error> {
             let tags = self.tags.lock().unwrap();
-            let mut filtered_tags: Vec<Tag> = Vec::new();
-            for tag in tags.values() {
-                if tag.fusen_ids().contains(&fusen_id) {
-                    filtered_tags.push(tag.clone());
-                }
-            }
+            let filtered_tags = tags
+                .values()
+                .filter(|&x| x.fusen_ids().contains(&fusen_id))
+                .map(|x| x.clone())
+                .collect();
             Ok(filtered_tags)
         }
 
