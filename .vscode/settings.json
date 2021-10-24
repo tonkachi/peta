@@ -5,8 +5,8 @@
       "server": "localhost",
       "port": 5432,
       "driver": "PostgreSQL",
-      "name": "test",
-      "database": "peta_test",
+      "name": "fusen_test",
+      "database": "fusen_test",
       "username": "postgres",
       "password": "postgres"
     },
@@ -15,8 +15,8 @@
       "server": "localhost",
       "port": 5432,
       "driver": "PostgreSQL",
-      "name": "peta",
-      "database": "peta",
+      "name": "fusen",
+      "database": "fusen",
       "username": "postgres",
       "password": "postgres"
     }
