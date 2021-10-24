@@ -1,1 +1,1 @@
-export DATABASE_URL=postgres://postgres:postgres@localhost/peta
+export FUSEN_DATABASE_URL=postgres://postgres:postgres@localhost/fusen

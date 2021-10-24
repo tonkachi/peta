@@ -6,7 +6,7 @@ services:
       dockerfile: .devcontainer/Dockerfile
     environment:
       - CARGO_BUILD_TARGET_DIR=/cache/target
-      - DATABASE_URL=postgres://postgres:postgres@localhost/peta
+      - FUSEN_DATABASE_URL=postgres://postgres:postgres@localhost/fusen
     tty: true
     working_dir: /workspace
     volumes:
