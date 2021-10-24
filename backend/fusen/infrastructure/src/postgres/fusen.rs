@@ -90,7 +90,7 @@ mod tests {
 
     #[test]
     fn test_fusen_repository_create() {
-        let database_url = "postgres://postgres:postgres@localhost/peta_test";
+        let database_url = "postgres://postgres:postgres@localhost/fusen_test";
         let connections = DbPool::new(database_url);
 
         init(connections.clone());
@@ -114,7 +114,7 @@ mod tests {
 
     #[test]
     fn test_fusen_repository_get() {
-        let database_url = "postgres://postgres:postgres@localhost/peta_test";
+        let database_url = "postgres://postgres:postgres@localhost/fusen_test";
         let connections = DbPool::new(database_url);
 
         init(connections.clone());
@@ -139,7 +139,7 @@ mod tests {
 
     #[test]
     fn test_fusen_repository_delete() {
-        let database_url = "postgres://postgres:postgres@localhost/peta_test";
+        let database_url = "postgres://postgres:postgres@localhost/fusen_test";
         let connections = DbPool::new(database_url);
 
         init(connections.clone());

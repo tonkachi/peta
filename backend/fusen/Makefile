@@ -1,7 +1,7 @@
 SHELL = /bin/bash
 
-DATABASE_URL ?= postgres://postgres:postgres@localhost/peta
-TEST_DATABASE_URL ?= postgres://postgres:postgres@localhost/peta_test
+FUSEN_DATABASE_URL ?= postgres://postgres:postgres@localhost/fusen
+FUSEN_TEST_DATABASE_URL ?= postgres://postgres:postgres@localhost/fusen_test
 
 .PHONY: all
 all: fmt lint test
@@ -20,15 +20,15 @@ test: db_test
 
 .PHONY: db
 db:
-	@diesel --database-url ${DATABASE_URL} setup
-	@diesel --database-url ${DATABASE_URL} migration run
-	@diesel --database-url ${DATABASE_URL} migration list
+	@diesel --database-url ${FUSEN_DATABASE_URL} setup
+	@diesel --database-url ${FUSEN_DATABASE_URL} migration run
+	@diesel --database-url ${FUSEN_DATABASE_URL} migration list
 
 .PHONY: db_test
 db_test:
-	@diesel --database-url ${TEST_DATABASE_URL} setup
-	@diesel --database-url ${TEST_DATABASE_URL} migration run
-	@diesel --database-url ${TEST_DATABASE_URL} migration list
+	@diesel --database-url ${FUSEN_TEST_DATABASE_URL} setup
+	@diesel --database-url ${FUSEN_TEST_DATABASE_URL} migration run
+	@diesel --database-url ${FUSEN_TEST_DATABASE_URL} migration list
 
 .PHONY: run
 run:

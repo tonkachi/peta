@@ -11,7 +11,7 @@ use usecase::interactor::GetFusenInteractor;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let database_url = env::var("FUSEN_DATABASE_URL").expect("FUSEN_DATABASE_URL must be set");
 
     let connections = DbPool::new(&database_url);
 
