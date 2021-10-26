@@ -20,6 +20,16 @@ jobs:
       SCCACHE_CACHE_SIZE: 256M
       SCCACHE_DIR: /home/runner/.cache/sccache
       # SCCACHE_RECACHE: 1 # Uncomment this to clear cache, then comment it back out
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - uses: actions/checkout@v2
       - name: Install sccache
@@ -59,6 +69,8 @@ jobs:
         run: sccache --start-server
       - name: Build
         run: cargo build
+      - name: Migrate database
+        run: make db_test
       - name: Run tests
         run: cargo test --workspace
       - name: Print sccache stats
