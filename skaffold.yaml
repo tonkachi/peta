@@ -1,0 +1,47 @@
+---
+apiVersion: skaffold/v2beta22
+kind: Config
+metadata:
+  name: postgresql
+deploy:
+  helm:
+    releases:
+      - name: fusen-database
+        repo: https://charts.bitnami.com/bitnami
+        remoteChart: postgresql
+        wait: true
+        setValues:
+          postgresqlDatabase: fusen
+          postgresqlUsername: postgres
+          postgresqlPassword: postgres
+---
+apiVersion: skaffold/v2beta24
+kind: Config
+metadata:
+  name: app
+build:
+  local:
+    useBuildkit: true
+  artifacts:
+    - image: ghcr.io/tonkachi/peta/fusen
+      docker:
+        dockerfile: Dockerfile.rust
+        network: host
+        buildArgs: { SERVICE_PATH: backend/fusen }
+deploy:
+  kustomize:
+    paths:
+      - manifest/overlays/localhost
+portForward:
+  - resourceType: service
+    resourceName: fusen
+    namespace: default
+    port: 50051
+    localPort: 50051
+  - resourceType: service
+    resourceName: fusen-database-postgresql
+    namespace: default
+    port: 5432
+    localPort: 5432
+profiles:
+  - name: localhost
