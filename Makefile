@@ -33,6 +33,10 @@ grpc:
 kind:
 	kind get clusters -q | grep "^peta" || kind create cluster --config kind.yaml
 
+.PHONY: dev
+dev:
+	skaffold dev
+
 .PHONY: clean
 clean:
 	kind delete cluster --name peta
