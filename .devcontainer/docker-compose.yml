@@ -4,21 +4,18 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
+    user: "${UID:-1000}:${GID:-1000}"
     environment:
-      CARGO_BUILD_TARGET_DIR: /cache/target
       FUSEN_DATABASE_URL: postgres://postgres:postgres@localhost/fusen
       TAG_DATABASE_URL: postgres://postgres:postgres@localhost/tag
       DOCKER_HOST: tcp://localhost:2376
       DOCKER_TLS_VERIFY: 1
       DOCKER_CERT_PATH: /certs/client
-      KUBECONFIG: /kube/config
     tty: true
     working_dir: /workspace
     volumes:
-      - ..:/workspace:delegated
-      - cache-rust-target:/cache/target
+      - ..:/workspace
       - docker-certs-client:/certs/client
-      - kube-config:/kube
     cap_add:
       - SYS_PTRACE
     security_opt:
@@ -52,4 +49,3 @@ volumes:
   postgres-data:
   docker-data:
   docker-certs-client:
-  kube-config:
