@@ -17,7 +17,4 @@ table! {
 
 joinable!(tags_fusen_ids -> tags (tag_hash));
 
-allow_tables_to_appear_in_same_query!(
-    tags,
-    tags_fusen_ids,
-);
+allow_tables_to_appear_in_same_query!(tags, tags_fusen_ids,);
