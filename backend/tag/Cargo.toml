@@ -11,6 +11,7 @@ members = ["domain", "usecase", "interface", "infrastructure"]
 [dependencies]
 domain = { path = "./domain"}
 usecase = { path = "./usecase"}
+infrastructure = { path = "./infrastructure" }
 
 [[bin]]
 name = "tag"
