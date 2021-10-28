@@ -10,6 +10,8 @@ services:
     tty: true
     working_dir: /workspace
     volumes:
+      - ${HOME}/.gitconfig:/root/.gitconfig:ro
+      - ${HOME}/.ssh:/root/.ssh:ro
       - ..:/workspace:delegated
       - cache-rust-target:/cache/target
     network_mode: service:db
