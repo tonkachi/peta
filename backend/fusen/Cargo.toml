@@ -23,5 +23,5 @@ tokio = { version = "1.12.0", features = [
 ] }
 
 [[bin]]
-name = "fusen"
+name = "app"
 path = "main.rs"

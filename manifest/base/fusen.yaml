@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fusen
+spec:
+  selector:
+    matchLabels:
+      app: fusen
+  template:
+    metadata:
+      labels:
+        app: fusen
+    spec:
+      containers:
+        - name: fusen
+          image: ghcr.io/tonkachi/peta/fusen:latest
+          command:
+            - /app
+          envFrom:
+            - secretRef:
+                name: fusen-secret
+              prefix: FUSEN_
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 32Mi
+          ports:
+            - name: grpc
+              containerPort: 50051
+          livenessProbe:
+            tcpSocket: { port: 50051 }
+            initialDelaySeconds: 10
+          readinessProbe:
+            tcpSocket: { port: 50051 }
+            initialDelaySeconds: 5
+            failureThreshold: 1
+            periodSeconds: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  fusen
+spec:
+  type: ClusterIP
+  selector:
+    app:  fusen
+  ports:
+    - name: grpc
+      port: 50051
+      targetPort: 50051
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name:  fusen-secret
+stringData:
+  DATABASE_URL: postgres://postgres:postgres@fusen-database-postgresql/fusen

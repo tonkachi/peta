@@ -28,3 +28,15 @@ db:
 .PHONY: grpc
 grpc:
 	@for f in $(SERVICES); do make -C $$f grpc; done
+
+.PHONY: kind
+kind:
+	kind get clusters -q | grep "^peta" || kind create cluster --config kind.yaml
+
+.PHONY: dev
+dev:
+	skaffold dev
+
+.PHONY: clean
+clean:
+	kind delete cluster --name peta

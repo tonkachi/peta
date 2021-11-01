@@ -12,13 +12,9 @@ RUN rustup component add rust-src && \
     rustup component add rust-analysis && \
     rustup component add rls
 
-# diesel
+# libpq
 RUN apt-get update && apt-get -y install --no-install-recommends libpq-dev && \
-    apt-get clean -y && rm -rf /var/lib/apt/lists/* && \
-    cargo install diesel_cli --no-default-features --features postgres
-
-# grpcurl
-RUN go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+    apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # yarn
 RUN npm install -g yarn
@@ -37,3 +33,12 @@ RUN curl -Lo /usr/local/bin/kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-
 # kubectl
 RUN curl -Lo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
     chmod +x /usr/local/bin/kubectl
+
+
+USER codespace
+
+# diesel
+RUN cargo install diesel_cli --no-default-features --features postgres
+
+# grpcurl
+RUN go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest

@@ -4,21 +4,26 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
+    user: "${UID:-1000}:${GID:-1000}"
     environment:
-      - CARGO_BUILD_TARGET_DIR=/cache/target
-      - FUSEN_DATABASE_URL=postgres://postgres:postgres@localhost/fusen
+      FUSEN_DATABASE_URL: postgres://postgres:postgres@localhost/fusen
+      TAG_DATABASE_URL: postgres://postgres:postgres@localhost/tag
+      DOCKER_HOST: tcp://localhost:2376
+      DOCKER_TLS_VERIFY: 1
+      DOCKER_CERT_PATH: /certs/client
     tty: true
     working_dir: /workspace
     volumes:
-      - ..:/workspace:delegated
-      - cache-rust-target:/cache/target
-    network_mode: service:db
+      - ..:/workspace
+      - docker-certs-client:/certs/client
     cap_add:
       - SYS_PTRACE
     security_opt:
       - seccomp:unconfined
     privileged: true
     init: true
+    ports:
+      - 5432:5432
 
   db:
     image: postgres:latest
@@ -29,7 +34,18 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: postgres
+    network_mode: service:dev
+
+  docker:
+    image: docker:20-dind
+    privileged: true
+    volumes:
+      - docker-data:/var/lib/docker
+      - docker-certs-client:/certs/client
+    network_mode: service:dev
 
 volumes:
   cache-rust-target:
   postgres-data:
+  docker-data:
+  docker-certs-client:
