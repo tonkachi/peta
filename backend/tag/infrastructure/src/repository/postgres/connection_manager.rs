@@ -1,7 +1,7 @@
 use diesel::pg::PgConnection;
 use diesel::r2d2::ConnectionManager as R2D2ConnectionManager;
 use diesel::r2d2::{Pool, PooledConnection};
-use r2d2::Error;
+use anyhow::{bail, Error};
 use std::time::Duration;
 
 pub struct ConnectionManager {
@@ -21,7 +21,10 @@ impl ConnectionManager {
     pub fn connection(
         &self,
     ) -> Result<PooledConnection<R2D2ConnectionManager<PgConnection>>, Error> {
-        self.pool.get()
+        match self.pool.get() {
+            Ok(con) => Ok(con),
+            Err(e) => bail!("{:#?}", e.to_string()),
+        }
     }
 }
 
