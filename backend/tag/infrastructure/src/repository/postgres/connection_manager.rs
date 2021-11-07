@@ -1,7 +1,7 @@
+use anyhow::{bail, Error};
 use diesel::pg::PgConnection;
 use diesel::r2d2::ConnectionManager as R2D2ConnectionManager;
 use diesel::r2d2::{Pool, PooledConnection};
-use anyhow::{bail, Error};
 use std::time::Duration;
 
 pub struct ConnectionManager {
