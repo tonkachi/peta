@@ -34,8 +34,10 @@ mod test {
     use crate::repository::postgres::env::test_env_util;
     #[test]
     fn generate_connection_manager() {
-        let cm =
-            ConnectionManager::new(test_env_util::var("TAG_TEST_DATABASE_URL"), Duration::new(5, 0));
+        let cm = ConnectionManager::new(
+            test_env_util::var("TAG_TEST_DATABASE_URL"),
+            Duration::new(5, 0),
+        );
         assert!(cm.connection().is_ok());
     }
 }
