@@ -7,7 +7,7 @@ pub mod test_env_util {
             Ok(v) => v,
             Err(_) => match name {
                 "TAG_DB_NAME" => String::from("tag_test"),
-                "TAG_DATABASE_URL" => {
+                "TAG_TEST_DATABASE_URL" => {
                     String::from("postgres://postgres:postgres@localhost/tag_test")
                 }
                 _ => panic!("can not resolve {:?}", name),

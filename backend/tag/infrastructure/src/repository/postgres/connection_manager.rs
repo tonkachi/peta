@@ -1,7 +1,7 @@
+use anyhow::{bail, Error};
 use diesel::pg::PgConnection;
 use diesel::r2d2::ConnectionManager as R2D2ConnectionManager;
 use diesel::r2d2::{Pool, PooledConnection};
-use r2d2::Error;
 use std::time::Duration;
 
 pub struct ConnectionManager {
@@ -21,7 +21,10 @@ impl ConnectionManager {
     pub fn connection(
         &self,
     ) -> Result<PooledConnection<R2D2ConnectionManager<PgConnection>>, Error> {
-        self.pool.get()
+        match self.pool.get() {
+            Ok(con) => Ok(con),
+            Err(e) => bail!("{:#?}", e.to_string()),
+        }
     }
 }
 
@@ -31,8 +34,10 @@ mod test {
     use crate::repository::postgres::env::test_env_util;
     #[test]
     fn generate_connection_manager() {
-        let cm =
-            ConnectionManager::new(test_env_util::var("TAG_DATABASE_URL"), Duration::new(5, 0));
+        let cm = ConnectionManager::new(
+            test_env_util::var("TAG_TEST_DATABASE_URL"),
+            Duration::new(5, 0),
+        );
         assert!(cm.connection().is_ok());
     }
 }
